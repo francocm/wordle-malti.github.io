@@ -53,7 +53,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         Swal.fire({
             title: "Avviż!",
             showCancelButton: false,
-            html: "<h1>Il-kliem qabel kienu bilfors nomi. M'għadhiex hekk il-logħba issa. Jistgħu ikunu kwalunkwe kelma ta' ħames ittri. <br> - Michael Pulis",
+            html: "<h1>Il-kliem qabel kienu bilfors nomi. M'għadhiex hekk il-logħba issa. Jistgħu ikunu kwalunkwe kelma ta' ħames ittri.</h1><h2>- Michael Pulis</h2>",
             confirmButtonText: "Tajjeb",
             allowOutsideClick: false,
         }).then((r) => {
@@ -88,8 +88,8 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
     }
 
     Promise.all([
-        fetch('answers.json').then(resp => resp.json()).then(json => $scope.vocab = json),
-        fetch('dictionary.json').then(resp => resp.json()).then(json => $scope.dict = json)
+        fetch('answers.json', {cache: "reload"}).then(resp => resp.json()).then(json => $scope.vocab = json),
+        fetch('dictionary.json', {cache: "reload"}).then(resp => resp.json()).then(json => $scope.dict = json)
     ]).then(startDialogue)
 
     $scope.top_row = ['Q', 'W', 'E', 'R', 'T', 'U', 'I', '?', 'O', 'P']

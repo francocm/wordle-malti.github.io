@@ -39,19 +39,18 @@ Biex tiġġenera dizzjunarju ġdid:
         * Ara li għandek `bash` disponibbli fl-_environment_ tiegħek.
         * Sempliċiment eżegwixxi l-kmand ta' `docker` li ssib ġewwa [./refresh-dictionary.sh](./refresh-dictionary.sh).
 
-Dan il-proċess idum ftit minuti (3-5 minuti), u jirriżulta f'file ġdid jiġi ġġenerat: [docs/dictionary.json](docs/dictionary.json). Minkejja li l-files li qed jiġu pproċessati huma akbar minn 1GB+, dan il-proċess juża biss madwar 35MB RAM, għax il-files qed jiġu streamed. Biex dan ikun effiċjenti, qed jintuża l-prinċipju ta' `jsonlines`. Finalment id-dizzjunarju prodott bħala riżultat, hu kbir biss ~30KB.
+Dan il-proċess idum ftit minuti (3-5 minuti), u jirriżulta f'2 files ġodda jiġu ġġenerati:
+
+* [docs/dictionary.json](docs/dictionary.json) - Fih il-lista kollha ta kliem aċċettati li persuna tista' tikteb.
+* [docs/answers.json](docs/answers.json) - Fih il-lista kollha ta kliem li jistgħu jintużaw bħala tweġibiet validi għall-logħoba.
+
+Minkejja li l-files li qed jiġu pproċessati huma akbar minn 1GB+, dan il-proċess juża biss madwar 35MB RAM, għax il-files qed jiġu streamed. Biex dan ikun effiċjenti, qed jintuża l-prinċipju ta' `jsonlines`. Finalment id-dizzjunarju prodott bħala riżultat, hu kbir biss ~120KB.
 
 ***
 
-Il-Javascript file [docs/app.js](docs/app.js) qed jiġi mpurtat ġewwa [docs/index.html](docs/index.html) billi jinkludi ukoll `integrity hash`. Ir-raġuni primarja għalfejn din qegħda hemm hi biex iġġiegħel il-browser jerġa' jniżżel dan il-fajl u mhux juża l-_cache_ jekk il-verżjoni tinbidel (għax jekk tinbidel ikun hemm hash ġdid). Hemm ukoll vantaġġi oħra relatati ma' security.
+Il-Javascript file [docs/app.js](docs/app.js) qed jiġi mpurtat ġewwa [docs/index.html](docs/index.html) billi jinkludi ukoll suffiss b'numru (eż.: `src="app.js?v=1"`). Ir-raġuni primarja għalfejn din qegħda hemm hi biex iġġiegħel il-browser jerġa' jniżżel dan il-fajl u mhux juża l-_cache_ jekk il-verżjoni tinbidel.
 
-Biex tiġġenera hash ġdid jekk [docs/app.js](docs/app.js) ikun inbidel, fuq sistema fejn għandek `bash` u `openssl`, agħmel:
-
-```bash
-openssl dgst -sha512 -binary app.js | openssl base64 -A
-```
-
-Ir-riżultat imbagħad poġġieh parti mill-`<script charset="UTF-8" src="app.js" integrity="sha512-[RIŻULTAT_HAWNEKK]"  crossorigin="anonymous" ></script>` _(innota l-prefiss `sha512-`)_.
+B'hekk, ftakar t'inkrementa dan in-numru jekk tibdel `app.js`, ħalli tisforza l-klijent jerġgħa jniżżlu.
 
 ***
 
